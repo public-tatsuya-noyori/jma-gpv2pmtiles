@@ -161,6 +161,7 @@ pub fn get_product_id_and_band(
         (151, 1, 203, Some(196)) => (HiresNowcastIntensity, 0),
         (151, 1, 214, Some(196)) => (HiresNowcastIntensityError, 0),
         (151, 15, 192, _) => (NowcastEchoTops, 0),
+        (151, 1, 203, _) => (NowcastIntensity1km, 0),
         // 竜巻発生確度ナウキャスト
         (153, 193, 0, _) => (TornadoNowcast, 0),
         // 雷ナウキャスト
@@ -337,6 +338,7 @@ pub fn get_product_by_data_kind_and_value_kind(
         ("hrnowc", "precip") => HiresNowcastPrecip,
         ("hrnowc", "precip-error") => HiresNowcastPrecipError,
         ("hrnowc", "echotops") => NowcastEchoTops,
+        ("hrnowc", "intensity1km") => NowcastIntensity1km,
 
         // 高解像度雲
         ("hrcloud", "cloud") => HiresCloud,
@@ -625,6 +627,7 @@ impl GpvProductIdentifier {
             MsmUpdraft => ("msm", "updraft"),
             MsmWind => ("msm", "wind"),
             NowcastEchoTops => ("hrnowc", "echotops"),
+            NowcastIntensity1km => ("hrnowc", "intensity1km"),
             OceanJpIceCover => ("ocean-jp-ice", "cover"),
             OceanJpIceDrift => ("ocean-jp-ice", "drift"),
             OceanJpIceThickness => ("ocean-jp-ice", "thickness"),
@@ -728,7 +731,7 @@ impl GpvProductIdentifier {
             | OceanJpSalinity | OceanJpTemperature | OceanNpCurrent | OceanNpHeight
             | OceanNpSalinity | OceanNpTemperature | Sst | SstDaily | SstHimawari
             | SuikeiSunshine | SuikeiTemperature | TidePressure | TideWind | WemWave
-            | OceanJpIceDrift | NowcastEchoTops => Aggregation::RoughAvg,
+            | OceanJpIceDrift | NowcastEchoTops | NowcastIntensity1km => Aggregation::RoughAvg,
             HiresCloudQc => Aggregation::BitOr,
             _ => Aggregation::Max,
         }
@@ -750,7 +753,7 @@ impl GpvProductIdentifier {
             Dojoshisu | Hyomenshisu | TideGuidance | Tide | TideAstronomical | TidePressure
             | TideWind | ThunderNowcast | KikikuruDosha | KikikuruFlood | KikikuruInundation
             | KikikuruTougou | SuikeiTemperature | SuikeiWeather | SuikeiSunshine
-            | NowcastEchoTops => &LngLatGrid {
+            | NowcastEchoTops | NowcastIntensity1km => &LngLatGrid {
                 lng_0: 110. + 1. / 80. / 2.,
                 lat_0: 10. + 1. / 120. / 2.,
                 lng_denom: 80.,
@@ -979,6 +982,7 @@ impl GpvProductIdentifier {
             | KikikuruInundation
             | KikikuruTougou
             | NowcastEchoTops
+            | NowcastIntensity1km
             | OceanJpIceCover
             | OceanJpIceThickness
             | Precipitaiton
@@ -1077,6 +1081,7 @@ pub enum GpvProductElement {
     MepsUpdraft,
     MepsWind,
     NowcastEchoTops,
+    NowcastIntensity1km,
     Ozone,
     Precipitaiton,
     Precipitaiton15h,
@@ -1276,6 +1281,7 @@ mod tests {
             GpvProductElement::MsmUpdraft,
             GpvProductElement::MsmWind,
             GpvProductElement::NowcastEchoTops,
+            GpvProductElement::NowcastIntensity1km,
             GpvProductElement::OceanJpIceCover,
             GpvProductElement::OceanJpIceDrift,
             GpvProductElement::OceanJpIceThickness,
