@@ -356,7 +356,7 @@ pub fn get_product_by_data_kind_and_value_kind(
         ("kikikuru", "inundation") => KikikuruInundation,
         ("kikikuru", "tougou") => KikikuruTougou,
 
-        // 降水短時間予報
+        // 黄砂解析予測
         ("kousa", "column") => KousaColumn,
         ("kousa", "low") => KousaLow,
 
@@ -731,7 +731,7 @@ impl GpvProductIdentifier {
             | OceanJpSalinity | OceanJpTemperature | OceanNpCurrent | OceanNpHeight
             | OceanNpSalinity | OceanNpTemperature | Sst | SstDaily | SstHimawari
             | SuikeiSunshine | SuikeiTemperature | TidePressure | TideWind | WemWave
-            | OceanJpIceDrift | NowcastEchoTops | NowcastIntensity1km => Aggregation::RoughAvg,
+            | OceanJpIceDrift | NowcastEchoTops => Aggregation::RoughAvg,
             HiresCloudQc => Aggregation::BitOr,
             _ => Aggregation::Max,
         }
